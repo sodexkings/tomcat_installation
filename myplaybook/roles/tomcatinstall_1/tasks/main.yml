@@ -31,7 +31,7 @@
       dest: /opt/tomcat
       remote_src: yes
 
-  - name: remove a directory name tomcat if any exist
+  - name: remove a directory name apache-tomcat if any exist
     file:
       path: /opt/tomcat/apache-tomcat
       state: absent
@@ -78,21 +78,21 @@
       #command: chown -R tomcat /opt/tomcat/apache-tomcat/logs
   - name: make the tomcat user the owner of the webapps, work, temp, and logs directories
     file:
-      path: /opt/tomcat/apache-tomcat/webapps
+      path: /opt/tomcat/apache-tomcat/work
       owner: tomcat
       recurse: yes
         
   - name: set up a Tomcat Systemd unit file and Create and open the unit file
     copy:
-      src: roles/tomcatinstall/files/tomcat.service
-      dest: /etc/systemd/system/tomcat.service
+      src: roles/tomcatinstall_1/files/tomcat.service
+      dest: /usr/lib/systemd/system
 
   - name:  reload Systemd to load the Tomcat unit file
     command: systemctl daemon-reload
 
   - name: Configure Tomcat Web Management Interface user
     copy:
-      src: roles/tomcatinstall/files/tomcat-users.xml
+      src: roles/tomcatinstall_1/files/tomcat-users.xml
       dest: /opt/tomcat/apache-tomcat/conf/tomcat-users.xml
 
   - name: enable tomcat service
