@@ -1,0 +1,6 @@
+---
+
+  req_tomcat_ver: 7.0.107
+  tomcat_url: https://mirrors.ocf.berkeley.edu/apache/tomcat/tomcat-7/v7.0.107/bin/apache-tomcat-7.0.107.tar.gz
+ 
+ 

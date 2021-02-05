@@ -1,0 +1,82 @@
+---
+ 
+
+  - name: create a tomcat directory
+    file:
+      path: /opt/tomcat
+      state: directory
+      mode: '0755'
+
+  - name: create a tomcat group
+    group:
+      name: tomcat
+      state: present
+
+  - name: create a tomcat user
+    user:
+      name: tomcat
+      shell: /bin/nologin
+      group: tomcat
+      home: /opt/tomcat
+      state: present
+ 
+  - name: Downloading required tomcat
+    get_url:
+      url: "{{tomcat_url}}"
+      dest: /opt/tomcat/
+
+  - name: Extracting downloaded tomcat
+    unarchive:
+      src: "/opt/tomcat/apache-tomcat-{{req_tomcat_ver}}.tar.gz"
+      dest: /opt/tomcat
+      remote_src: yes
+
+  - name: remove a directory name tomcat if any exist
+    file:
+      path: /opt/tomcat/apache-tomcat
+      state: absent
+ 
+  - name: rename apache-tomcat version as apache-tomcat
+    command: mv  /opt/tomcat/apache-tomcat-{{req_tomcat_ver}} /opt/tomcat/apache-tomcat
+ 
+  - name: Give the tomcat group ownership over the entire installation directory
+    command: chgrp -R tomcat /opt/tomcat
+
+  - name: give the tomcat group read access to the conf directory and all of its contents
+    command: chmod -R g+r /opt/tomcat/apache-tomcat/conf
+
+  - name: Give execute permisson to the conf directory
+    command: chmod g+x /opt/tomcat/apache-tomcat/conf
+
+  - name: make the tomcat user the owner of the webapps, work, temp, and logs directories
+    command: chown -R tomcat /opt/tomcat/apache-tomcat/webapps
+    
+  - name: make the tomcat user the owner of the webapps, work, temp, and logs directories
+    command: chown -R tomcat /opt/tomcat/apache-tomcat/temp
+
+  - name: make the tomcat user the owner of the webapps, work, temp, and logs directories
+    command: chown -R tomcat /opt/tomcat/apache-tomcat/logs
+        
+  - name: set up a Tomcat Systemd unit file and Create and open the unit file
+    copy:
+      src: roles/tomcatinstall/files/tomcat.service
+      dest: /etc/systemd/system/tomcat.service
+
+  - name:  reload Systemd to load the Tomcat unit file
+    command: systemctl daemon-reload
+
+  - name: Configure Tomcat Web Management Interface user
+    copy:
+      src: roles/tomcatinstall/files/tomcat-users.xml
+      dest: /opt/tomcat/apache-tomcat/conf/tomcat-users.xml
+
+  - name: enable tomcat service
+    command: systemctl enable tomcat
+
+  - name: start tomcat service
+    command: systemctl start tomcat
+
+
+
+
+

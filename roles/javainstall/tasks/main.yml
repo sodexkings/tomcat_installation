@@ -1,0 +1,5 @@
+---
+ - name: Installing required java
+   yum:
+     name: "{{req_java}}"
+     state: present

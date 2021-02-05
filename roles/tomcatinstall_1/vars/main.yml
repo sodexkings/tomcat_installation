@@ -1,0 +1,8 @@
+---
+
+  req_tomcat_ver: 9.0.41
+  tomcat_url: https://apache.osuosl.org/tomcat/tomcat-{{req_tomcat_ver.split('.')[0]}}/v{{req_tomcat_ver}}/bin/apache-tomcat-{{req_tomcat_ver}}.tar.gz
+  tomcatuser_role: manager-gui
+  tomcatuser_name: admin
+  tomcatuser_password: admin
+ 
