@@ -1,6 +1,6 @@
 ---
   - name: Installation of java and configuration of  tomcat server
-    hosts: dev
+    hosts: all
     gather_facts: false
     become: yes
     roles:
