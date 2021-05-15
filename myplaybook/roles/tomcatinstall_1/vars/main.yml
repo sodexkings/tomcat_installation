@@ -1,6 +1,6 @@
 ---
 
-  req_tomcat_ver: 8.5.63
-  tomcat_url: https://apache.osuosl.org/tomcat/tomcat-{{req_tomcat_ver.split('.')[0]}}/v{{req_tomcat_ver}}/bin/apache-tomcat-{{req_tomcat_ver}}.tar.gz
+  req_tomcat_ver: 8.5.66
+  tomcat_url: https://downloads.apache.org/tomcat/tomcat-{{req_tomcat_ver.split('.')[0]}}/v{{req_tomcat_ver}}/bin/apache-tomcat-{{req_tomcat_ver}}.tar.gz
   
  
